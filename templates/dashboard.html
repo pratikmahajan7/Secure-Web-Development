@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dashboard</title></head>
+<body>
+  <h2>Welcome, {{ current_user.username }}!</h2>
+  <a href="/logout">Logout</a>
+  {% if current_user.role == 'admin' %} | <a href="/admin">Admin Panel</a>{% endif %}
+  <hr>
+  <h3>Your Tasks</h3>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in messages %}<p>{{ msg }}</p>{% endfor %}
+  {% endwith %}
+  {% for task in tasks %}
+    <p><b>{{ task.title }}</b> - {{ task.description }}
+    <a href="/delete-task/{{ task.id }}">[Delete]</a></p>
+  {% else %}
+    <p>No tasks yet.</p>
+  {% endfor %}
+  <hr>
+  <h3>Add a Task</h3>
+  <form method="POST" action="/add-task">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="text" name="title" placeholder="Task title" required><br><br>
+    <input type="text" name="description" placeholder="Description"><br><br>
+    <button type="submit">Add Task</button>
+  </form>
+</body>
+</html>

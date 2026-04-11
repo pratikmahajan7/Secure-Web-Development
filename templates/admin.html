@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Admin Panel</title></head>
+<body>
+  <h2>Admin Panel</h2>
+  <a href="/dashboard">Back to Dashboard</a>
+  <h3>All Users</h3>
+  {% for user in users %}
+    <p>{{ user.id }} - {{ user.username }} - Role: {{ user.role }}</p>
+  {% endfor %}
+  <h3>All Tasks</h3>
+  {% for task in tasks %}
+    <p>{{ task.title }} (by user_id: {{ task.user_id }})
+    <a href="/delete-task/{{ task.id }}">[Delete]</a></p>
+  {% endfor %}
+</body>
+</html>
