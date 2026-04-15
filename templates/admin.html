@@ -1,17 +1,201 @@
 <!DOCTYPE html>
-<html>
-<head><title>Admin Panel</title></head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #0d6efd;
+            color: white;
+            padding: 14px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .navbar .brand { font-size: 1.2em; font-weight: bold; }
+
+        .navbar .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .navbar .nav-links a:hover { opacity: 1; text-decoration: underline; }
+
+        /* Page */
+        .page-content {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            color: #333;
+            margin-bottom: 24px;
+            font-size: 1.5em;
+        }
+
+        /* Cards */
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+            padding: 28px 32px;
+            margin-bottom: 28px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.1em;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+
+        thead th {
+            background-color: #f8f9fa;
+            text-align: left;
+            padding: 12px 14px;
+            color: #555;
+            font-weight: 600;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        tbody td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #444;
+            vertical-align: middle;
+        }
+
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background-color: #fafafa; }
+
+        /* Role badge */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .badge-admin { background-color: #fff3cd; color: #856404; }
+        .badge-user  { background-color: #d1e7dd; color: #0a3622; }
+
+        /* Delete link */
+        .delete-btn {
+            background: none;
+            border: 1px solid #dc3545;
+            color: #dc3545;
+            padding: 5px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            text-decoration: none;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .delete-btn:hover { background-color: #dc3545; color: white; }
+
+        .empty-row td {
+            text-align: center;
+            color: #aaa;
+            font-style: italic;
+            padding: 24px;
+        }
+    </style>
+</head>
 <body>
-  <h2>Admin Panel</h2>
-  <a href="/dashboard">Back to Dashboard</a>
-  <h3>All Users</h3>
-  {% for user in users %}
-    <p>{{ user.id }} - {{ user.username }} - Role: {{ user.role }}</p>
-  {% endfor %}
-  <h3>All Tasks</h3>
-  {% for task in tasks %}
-    <p>{{ task.title }} (by user_id: {{ task.user_id }})
-    <a href="/delete-task/{{ task.id }}">[Delete]</a></p>
-  {% endfor %}
+
+    <nav class="navbar">
+        <span class="brand">Admin Panel</span>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="page-content">
+
+        <h2 class="page-title">Admin Overview</h2>
+
+        <!-- Users Table -->
+        <div class="card">
+            <h3>All Users</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>
+                            <span class="badge {% if user.role == 'admin' %}badge-admin{% else %}badge-user{% endif %}">
+                                {{ user.role }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr class="empty-row"><td colspan="3">No users found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tasks Table -->
+        <div class="card">
+            <h3>All Tasks</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Owner (User ID)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.user_id }}</td>
+                        <td><a href="/delete-task/{{ task.id }}" class="delete-btn">Delete</a></td>
+                    </tr>
+                    {% else %}
+                    <tr class="empty-row"><td colspan="3">No tasks found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
 </body>
 </html>

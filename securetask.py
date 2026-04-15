@@ -10,7 +10,7 @@ import os
 
 # ---------- App Setup ----------
 app = Flask(__name__)
-app.secret_key = os.urandom(24)          # Random secret key each time
+app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=15)  # Auto logout after 15 mins
 
