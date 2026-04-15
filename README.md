@@ -447,7 +447,3 @@ Any value is accepted during registration — blank usernames, single-character 
 | Jinja2 | HTML templating (built into Flask) |
 
 ---
-
-<div align="center">
-  <p>National College of Ireland &nbsp;·&nbsp; Secure Web Development &nbsp;·&nbsp; CA2</p>
-</div>
