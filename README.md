@@ -2,10 +2,9 @@
 
 # SecureTask — Secure Web Development CA2
 
-### National College of Ireland
 
 A Python/Flask task management application built in two versions —  
-a **secure** production-ready app and an **intentionally vulnerable** counterpart —  
+a secure production-ready app and a vulnerable counterpart —  
 to demonstrate real-world web security principles and common vulnerability classes.
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
@@ -34,17 +33,14 @@ to demonstrate real-world web security principles and common vulnerability class
 
 ## 1. Project Overview
 
-This project was created for **CA2 of Secure Web Development** at NCI. It consists of two Flask applications that share the same core functionality — user registration, login, a personal task manager, and an admin panel — but differ entirely in their security posture.
+This project was built as part of the CA2 assessment for Secure Web Development at NCI. It includes two Flask applications that do the same core things — user registration, login, a personal task manager, and an admin panel — but they differ completely in how they handle security.
 
 | App | File | Port | Purpose |
 |---|---|---|---|
 | Secure | `securetask.py` | 5000 | Production-ready, all vulnerabilities mitigated |
-| Vulnerable | `vulnerableapp.py` | 5001 | Intentionally broken, for educational demonstration |
+| Vulnerable | `vulnerableapp.py` | 5001 | Intentionally broken |
 
-Running both simultaneously allows a direct, side-by-side demonstration of each attack and its fix.
-
-> **Warning:** `vulnerableapp.py` is intentionally insecure. Never deploy it on a public server or network.
-
+Running both apps side by side makes it easy to see how attacks work and how they can be prevented.
 ---
 
 ## 2. Project Structure
@@ -52,17 +48,17 @@ Running both simultaneously allows a direct, side-by-side demonstration of each 
 ```
 Secure-Web-Development/
 │
-├── securetask.py          # Secure Flask application (main deliverable)
-├── vulnerableapp.py       # Intentionally vulnerable version (for comparison)
+├── securetask.py         -  Secure Flask application (main deliverable)
+├── vulnerableapp.py      -  Intentionally vulnerable version (for comparison)
 │
-├── templates/             # HTML templates (used by securetask.py)
+├── templates/            -  HTML templates (used by securetask.py)
 │   ├── login.html
 │   ├── register.html
 │   ├── dashboard.html
 │   └── admin.html
 │
 ├── instance/
-│   └── database.db        # SQLite database (auto-created on first run)
+│   └── database.db        - SQLite database (auto-created on first run)
 │
 └── README.md
 ```
@@ -82,20 +78,17 @@ Secure-Web-Development/
 pip install flask flask-sqlalchemy flask-login flask-wtf flask-limiter werkzeug
 ```
 
-Or if a `requirements.txt` is present:
+Or if a `requirements.txt` is file:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Environment variable (recommended for secure app)
+### Environment Variable (Recommended)
 
-The secure app reads the secret key from an environment variable. Set it before running:
+The secure app uses an environment variable for the secret key.
 
 ```bash
-# macOS / Linux
-export SECRET_KEY="your-long-random-secret-key-here"
-
 # Windows Command Prompt
 set SECRET_KEY=your-long-random-secret-key-here
 
@@ -103,13 +96,13 @@ set SECRET_KEY=your-long-random-secret-key-here
 $env:SECRET_KEY="your-long-random-secret-key-here"
 ```
 
-If not set, it falls back to a default development key. **Always set this in production.**
+If not set, it falls back to a default development key.
 
 ---
 
 ## 4. Running the Apps
 
-### Run the Secure App (port 5000)
+### Secure App (port 5000)
 
 ```bash
 python securetask.py
@@ -117,7 +110,7 @@ python securetask.py
 
 Visit: `http://127.0.0.1:5000`
 
-### Run the Vulnerable App (port 5001)
+### Vulnerable App (port 5001)
 
 ```bash
 python vulnerableapp.py
@@ -131,7 +124,7 @@ Both can run at the same time in separate terminals for live comparison.
 
 ## 5. Default Credentials
 
-Both apps seed a default admin account on first run.
+Both apps create a default admin account when first run:
 
 | App | Username | Password |
 |---|---|---|
