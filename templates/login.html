@@ -96,11 +96,15 @@
     </style>
 </head>
 <body>
-
+<h2>Login</h2>
     <div class="page-wrapper">
         <div class="login-card">
-            <h1 class="login-title">🔒 Secure Login</h1>
-            
+            <h1 class="login-title"> Secure Login</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+  {% for cat, msg in messages %}
+    <p style="color:red">{{ msg }}</p>
+  {% endfor %}
+{% endwith %}
             <form method="POST" action="/login">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="input-group">

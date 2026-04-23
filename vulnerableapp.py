@@ -4,11 +4,7 @@ import os
 
 # ============================================================
 # VULNERABLE VERSION - SecureTask (No Security Features)
-# Created for CA2 - Secure Web Development
-# National College of Ireland
-#
-# THIS FILE IS INTENTIONALLY INSECURE FOR EDUCATIONAL PURPOSES
-# DO NOT DEPLOY THIS ON THE INTERNET
+#  CA2 - Secure Web Development
 #
 # Vulnerabilities present in this file:
 #  1.  Plain text password storage (no hashing)
@@ -26,7 +22,6 @@ import os
 app = Flask(__name__)
 
 # VULNERABILITY 5: Hardcoded weak secret key
-# An attacker who knows this can forge session cookies
 app.secret_key = "password123"
 
 DB = "vulnerable.db"
@@ -58,7 +53,7 @@ def init_db():
     conn.commit()
     conn.close()
 
-# ── HTML Templates ─────────────────────────────────────────────────────────────
+# ── HTML Templates 
 
 LOGIN_PAGE = """
 <html><head><title>Login</title></head><body>
